@@ -1,0 +1,175 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VESP MART - Furniture Mart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        .header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+        .cart-icon {
+            background: #ff9800;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .products {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+        .product {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            width: 250px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+        }
+        .cart {
+            margin-top: 20px;
+            padding: 15px;
+            border-top: 2px solid #333;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .main-page-btn {
+            display: block;
+            margin: 40px auto;
+            background: #28a745;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+        }
+        #checkout-btn {
+            display: none;
+            background: #007bff;
+            color: white;
+            padding: 15px 20px;
+            border: none;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+   <div class="header">
+        <div>VESP MART - Your Furniture Store</div>
+        <div class="cart-icon" onclick="toggleCart()">🛒 Cart (<span id="cart-count">0</span>)</div>
+    </div>
+    <div class="products" id="products">
+        <div class="product">
+            <img src="https://www.ikea.com/in/en/images/products/gammalbyn-3-seat-sofa-blue__0868912_pe781422_s5.jpg?f=xl" alt="Sofa">
+            <h3>Sofa</h3>
+            <p>₹25,000</p>
+            <input type="number" id="sofaQty" min="1" value="1">
+            <button onclick="addToCart('Sofa', 25000, 'sofaQty')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://www.ikea.com/in/en/images/products/sandsberg-adde-table-and-4-chairs-black-black__1016431_pe830392_s5.jpg?f=xl" alt="Dining Table">
+            <h3>Dining Table</h3>
+            <p>₹18,000</p>
+            <input type="number" id="diningTableQty" min="1" value="1">
+            <button onclick="addToCart('Dining Table', 18000, 'diningTableQty')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://www.ikea.com/in/en/images/products/malm-bed-frame-high-w-2-storage-boxes-blue-luroey__1330510_pe945705_s5.jpg?f=xl" alt="Bed">
+            <h3>Bed</h3>
+            <p>₹30,500</p>
+            <input type="number" id="bedQty" min="1" value="1">
+            <button onclick="addToCart('Bed', 30500, 'bedQty')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://www.ikea.com/in/en/images/products/pax-forsand-wardrobe-dark-grey-dark-grey__1120770_pe873945_s5.jpg?f=xl" alt="Wardrobe">
+            <h3>Wardrobe</h3>
+            <p>₹22,000</p>
+            <input type="number" id="wardrobeQty" min="1" value="1">
+            <button onclick="addToCart('Wardrobe', 22000, 'wardrobeQty')">Add to Cart</button>
+        </div>
+        <div class="product">
+            <img src="https://www.ikea.com/in/en/images/products/groenfjaell-office-chair-with-armrests-letafors-grey-black__1273321_pe930000_s5.jpg?f=xl" alt="Office Chair">
+            <h3>Office Chair</h3>
+            <p>₹7,500</p>
+            <input type="number" id="chairQty" min="1" value="1">
+            <button onclick="addToCart('Office Chair', 7500, 'chairQty')">Add to Cart</button>
+        </div>
+    </div>
+       <div class="cart" id="cart-section" style="display: none;">
+        <h2>Shopping Cart</h2>
+        <ul id="cart"></ul>
+        <h3>Total: ₹<span id="total">0</span></h3>
+        <button id="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+    </div>
+
+   <a href="E Commerce Website.html"><button>GO BACK TO MAIN PAGE</button></a>
+
+ <script>
+        let cart = {};
+        function addToCart(item, price, qtyId) {
+            let quantity = parseInt(document.getElementById(qtyId).value);
+            if (cart[item]) {
+                cart[item].quantity += quantity;
+                cart[item].totalPrice += price * quantity;
+            } else {
+                cart[item] = { quantity: quantity, totalPrice: price * quantity };
+            }
+            updateCart();
+        }
+        function updateCart() {
+            let cartList = document.getElementById("cart");
+            let totalAmount = 0;
+            let totalItems = 0;
+            cartList.innerHTML = "";
+            for (let item in cart) {
+                cartList.innerHTML += `<li>${item} (x${cart[item].quantity}) - ₹${cart[item].totalPrice}</li>`;
+                totalAmount += cart[item].totalPrice;
+                totalItems += cart[item].quantity;
+            }
+            document.getElementById("total").innerText = totalAmount;
+            document.getElementById("cart-count").innerText = totalItems;
+            
+            let checkoutBtn = document.getElementById("checkout-btn");
+            checkoutBtn.style.display = totalItems > 0 ? "block" : "none";
+        }
+        function toggleCart() {
+            let cartSection = document.getElementById("cart-section");
+            cartSection.style.display = cartSection.style.display === "none" ? "block" : "none";
+        }
+        function checkout() {
+            localStorage.setItem("cart", JSON.stringify(cart));
+            window.location.href = "Customer Detalis.html";
+        }
+    </script>
+</body>
+</html>

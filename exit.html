@@ -1,0 +1,79 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f8f9fa;
+        button {
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+            background: #28a745;
+            color: white;
+            border: none;
+        }
+
+        }
+        .thank-you {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            text-align: left;
+            width: 50%;
+        }
+        h1 {
+            color: #28a745;
+        }
+        p {
+            color: #555;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const name = urlParams.get('name') || 'Customer';
+            const address = urlParams.get('address') || 'Provided address';
+            const city = urlParams.get('city') || 'Not specified';
+            const district = urlParams.get('district') || 'Not specified';
+            const state = urlParams.get('state') || 'Not specified';
+            const pin = urlParams.get('pin') || 'Not specified';
+            
+            document.getElementById('customer-name').textContent = name;
+            document.getElementById('customer-address').textContent = address;
+            document.getElementById('customer-city').textContent = city;
+            document.getElementById('customer-district').textContent = district;
+            document.getElementById('customer-state').textContent = state;
+            document.getElementById('customer-pin').textContent = pin;
+
+            const deliveryTime = new Date();
+            deliveryTime.setDate(deliveryTime.getDate() + 3); // Estimated 3 days delivery
+            document.getElementById('delivery-time').textContent = deliveryTime.toDateString();
+        };
+    </script>
+</head>
+<body>
+    <div class="thank-you">
+        <h1>Thank You for Your Purchase!</h1>
+        <p>Your order has been successfully placed.</p>
+        <h3>Order Details:</h3>
+        <p><strong>Name:</strong> <span id="customer-name"></span></p>
+        <p><strong>Address:</strong> <span id="customer-address"></span></p>
+        <p><strong>City:</strong> <span id="customer-city"></span></p>
+        <p><strong>District:</strong> <span id="customer-district"></span></p>
+        <p><strong>State:</strong> <span id="customer-state"></span></p>
+        <p><strong>City Pin:</strong> <span id="customer-pin"></span></p>
+        <p><strong>Estimated Delivery Date:</strong> <span id="delivery-time"></span></p>
+    </div>
+    <br>
+    <br>
+    <br>
+   <center><a href="E Commerce Website.html"><button>GO BACK TO MAIN PAGE</button></a></center>
+</body>
+</html>
